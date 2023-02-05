@@ -88,6 +88,7 @@ void loop()
   if (blipping) {
     // Yes, so send a z
     Keyboard.write('z');
+    delay(250); // So uncivilized
     // Check if we've let go of the blip
     if (digitalRead(blip) == HIGH){
       // We're no longer blipping, send x
