@@ -84,37 +84,32 @@ Keyboard.begin();
 
 void loop()
 {
-  // Check if we're blipping
-  if (blipping) {
-    // Yes, so send a z
-    Keyboard.write('z');
-    delay(250); // So uncivilized
     // Check if we've let go of the blip
-    if (digitalRead(blip) == HIGH){
+    if blipping && (digitalRead(blip) == HIGH){
       // We're no longer blipping, send x
       Keyboard.write('x');
       // And set blipping to false
       blipping=false;
     }
-  }
 
   {Joystick.button(1, digitalRead(brakes));
   delay(50);}
   
-  {Joystick.Z(analogRead(A20));
+  Joystick.Z(analogRead(A20));
   Joystick.Y(analogRead(A15));
   Joystick.X(analogRead(A16));
   Joystick.Zrotate(analogRead(A14));
   Joystick.sliderLeft(analogRead(A22));
   Joystick.sliderRight(analogRead(A21));
-  delay(50);}
+  
   
   if (digitalRead(fullt) == LOW)                       
   {Keyboard.write('z');                              
     delay(250);}
 
-  if (digitalRead(blip) == LOW)                     
-  {blipping=true;}
+  if (digitalRead(blip) == LOW) && blipping == false                     
+  { Keyboard.write('z');
+    blipping=true;}
 
   int mtreading = digitalRead(mthrot);
 
