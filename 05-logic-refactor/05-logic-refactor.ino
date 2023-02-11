@@ -28,7 +28,7 @@ int ui = 21;
 int scrnshot = 20;
 int lights = 19;
 int gear = 18;
-int brakes = 17;
+//int brakes = 17;
 int rate = 16;
 
 int lightspos = 2;
@@ -38,6 +38,21 @@ int brakespos = 2;
 bool ptstate = false;
 bool mtstate = false;
 bool blipping = false; //Are we currently in a blip?
+
+const int abort_led =  37;  
+int ledState = LOW;
+unsigned long previousMillis = 0;
+unsigned long stage_previousMillis = 0; 
+unsigned long abort_deactivate = 0; // Target time to turn off the blinking
+const long interval = 100; // Blink interval
+const long abortdelay = 5000; // how long it blinks
+
+int stage_ledState = LOW;
+const int stage_led =  36;   
+int stageledState = LOW;
+unsigned long stage_deactivate = 0; // Target time to turn off the blinking
+const long stage_interval = 100; // Blink interval
+const long stagedelay = 5000; // how long it blinks
 
 void setup() 
 {
@@ -69,24 +84,87 @@ pinMode(ui, INPUT_PULLUP);
 pinMode(scrnshot, INPUT_PULLUP);
 pinMode(lights, INPUT_PULLUP);
 pinMode(gear, INPUT_PULLUP);
-pinMode(brakes, INPUT_PULLUP);
+//pinMode(brakes, INPUT_PULLUP);
 pinMode(rate, INPUT_PULLUP);
-pinMode(A14, INPUT_PULLUP);
-pinMode(A15, INPUT_PULLUP);
-pinMode(A16, INPUT_PULLUP);
-pinMode(A22, INPUT_PULLUP);
-pinMode(A21, INPUT_PULLUP);
-pinMode(A20, INPUT_PULLUP);
+//pinMode(A14, INPUT_PULLUP);
+//pinMode(A15, INPUT_PULLUP);
+//pinMode(A16, INPUT_PULLUP);
+//pinMode(A22, INPUT_PULLUP);
+//pinMode(A21, INPUT_PULLUP);
+//pinMode(A20, INPUT_PULLUP);
 
+ pinMode(abort_led, OUTPUT);
+ pinMode(stage_led, OUTPUT);
+ digitalWrite(abort_led, HIGH); // Set the LED on
+ digitalWrite(stage_led, HIGH); // Set the LED   
+    
 Keyboard.begin();
 
 }
 
 void loop()
 {
-    // Check if we've let go of the blip
-    if blipping && (digitalRead(blip) == HIGH){
-      // We're no longer blipping, send x
+    
+  unsigned long currentMillis = millis();
+  unsigned long stage_currentMillis = millis();
+
+  // Look for a button press
+  if (digitalRead(abortkey) == LOW)
+  {
+    // Send the abort
+    Keyboard.press(KEY_BACKSPACE);                          
+    delay(100);
+    Keyboard.release(KEY_BACKSPACE);
+    // Set when to shut off the blinking
+    abort_deactivate = currentMillis + abortdelay;
+  }
+
+  // Blink if we haven't reached abort_deactivate yet
+  if (currentMillis < abort_deactivate)
+  {
+    // Blinky Blinky
+    if (currentMillis - previousMillis >= interval) 
+    {
+        previousMillis = currentMillis;
+        if (ledState == LOW) {
+            ledState = HIGH;
+        } else {
+        ledState = LOW;
+        }
+      digitalWrite(abort_led, ledState);
+    }
+        } else {
+    // abort_deactivate. Turn the LED to solid on.
+        digitalWrite(abort_led, HIGH);
+        }
+
+
+if (digitalRead(stage) == LOW) {
+    stage_deactivate = stage_currentMillis + stagedelay;  
+    Keyboard.press(KEY_SPACE);   
+    delay(25);
+    Keyboard.release(KEY_SPACE);
+    delay(100);
+  }
+  //Blink if we haven't reached abort_deactivate yet
+ if (stage_currentMillis < stage_deactivate){
+      stage_previousMillis = stage_currentMillis;
+ if (stage_ledState == LOW) {
+      stage_ledState = HIGH;
+      } 
+ else {
+        stage_ledState = LOW;
+    }
+      digitalWrite(stage_led, stageledState);
+     }
+ else {
+        //abort_deactivate. Turn the LED to solid on.
+       digitalWrite(stage_led, HIGH);
+      }
+    
+   // Check if we've let go of the blip
+ if blipping && (digitalRead(blip) == HIGH){
+   // We're no longer blipping, send x
       Keyboard.write('x');
       // And set blipping to false
       blipping=false;
