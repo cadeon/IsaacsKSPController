@@ -1,0 +1,56 @@
+Last Updated Jan 5 2023
+Teensy 3.6
+
+Left Front Side
+
+GND
+	0		z			100% Throttle
+	1		zx			Blip 100% Throttle
+	2		LSHIFT		Positive Throttle
+	3		CTRL		Minus Throttle
+	4		x			0% Throttle
+	5		v			cycle camera
+	6		H			LIN/ROT - assigned in KSP, not default
+	7		SPACE		stage
+	8		ALT			lck stage
+	9		F			Grab		
+	10		B			Board
+	11		]			Next Vessel
+	12		[			Previous Vessel
+3.3V
+	24		CTRL+F9		Quick Load Menu
+	25		R			RCS
+	26		F5			Quick Save
+	27		T			SAS
+	28		.			Time +
+	29		,			Time -
+	30		/			Time Stop
+A12	31		INSERT		Staging Menu
+A13 32		DELETE		Docking Menu
+
+Front Right Side
+
+Vin (3.6 to 6.0 Volts)
+analog GND
+3.3V
+A9	23		M			Map
+A8	22		BACKSPACE	Abort
+A7	21		F2			UI
+A6	20		F1			Screen Shot
+A5	19		U			Lights
+A4	18		G			Gear
+A3	17		B			Brakes
+A2	16		CAPSLOCK	Change Rate
+A1	15					CLK Rot. Enc.
+A0	14					DT Rot. Enc.
+LED	13					SW Rot. Enc.
+GND
+	A22					Slider(X axis cam)
+	A21					Slider(Y axis cam)
+39	A20					Z Axis
+38	A19
+37	A18
+36	A17					
+35	A16					X Axis
+34	A15					Y Axis
+33	A14					Z Rotate
