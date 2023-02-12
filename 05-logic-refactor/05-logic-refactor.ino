@@ -163,7 +163,7 @@ if (digitalRead(stage) == LOW) {
       }
     
    // Check if we've let go of the blip
- if blipping && (digitalRead(blip) == HIGH){
+ if (digitalRead(blip) == HIGH) && blipping == true{
    // We're no longer blipping, send x
       Keyboard.write('x');
       // And set blipping to false
