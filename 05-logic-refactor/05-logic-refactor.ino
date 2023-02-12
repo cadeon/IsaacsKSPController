@@ -28,7 +28,6 @@ int ui = 21;
 int scrnshot = 20;
 int lights = 19;
 int gear = 18;
-//int brakes = 17;
 int rate = 16;
 
 int lightspos = 2;
@@ -84,14 +83,8 @@ pinMode(ui, INPUT_PULLUP);
 pinMode(scrnshot, INPUT_PULLUP);
 pinMode(lights, INPUT_PULLUP);
 pinMode(gear, INPUT_PULLUP);
-//pinMode(brakes, INPUT_PULLUP);
 pinMode(rate, INPUT_PULLUP);
-//pinMode(A14, INPUT_PULLUP);
-//pinMode(A15, INPUT_PULLUP);
-//pinMode(A16, INPUT_PULLUP);
-//pinMode(A22, INPUT_PULLUP);
-//pinMode(A21, INPUT_PULLUP);
-//pinMode(A20, INPUT_PULLUP);
+
 
  pinMode(abort_led, OUTPUT);
  pinMode(stage_led, OUTPUT);
@@ -169,17 +162,6 @@ if (digitalRead(stage) == LOW) {
       // And set blipping to false
       blipping=false;
     }
-
-  {Joystick.button(1, digitalRead(brakes));
-  delay(50);}
-  
-  Joystick.Z(analogRead(A20));
-  Joystick.Y(analogRead(A15));
-  Joystick.X(analogRead(A16));
-  Joystick.Zrotate(analogRead(A14));
-  Joystick.sliderLeft(analogRead(A22));
-  Joystick.sliderRight(analogRead(A21));
-  
   
   if (digitalRead(fullt) == LOW)                       
   {Keyboard.write('z');                              
